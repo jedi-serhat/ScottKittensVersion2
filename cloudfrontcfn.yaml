@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: |
+  This cfn file is used for creating a template which runs S3 static 
+  web-hosting using cloudfront distribution.
+Parameters:
+
+Resources:
+
+  scott-kittens-clarusway-us:
+    Type: AWS::S3::Bucket
+    Properties:
+
+      BucketName: "scott-kittens-clarusway-us"
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+      WebsiteConfiguration:
+        IndexDocument: "index.html"
+  
+  MyBucketPolicy:
+            Type: 'AWS::S3::BucketPolicy'
+            Properties:
+              Bucket:
+                Ref: 'MyBucket'
+              PolicyDocument:
+                Version: '2012-10-17'
+                Statement:
+                  - Effect: Allow
+                    Principal: '*'
+                    Action: 's3:GetObject'
+                    Resource: arn:aws:s3:::scott-kittens-clarusway-us/*
+
+Outputs:
+
+  BucketName: 
+    
+  CloudfrontEndpoint:
+    
+  FullDomainName:
+    
